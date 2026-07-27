@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo App</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color:#f4f4f4;
+}
+
+.todo{
+    width:500px;
+    padding:20px;
+    background-color:white;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+.todo-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    margin-top:10px;
+    border:2px solid black;
+    border-radius:5px;
+}
+
+.todo-item p{
+    flex:1;
+    margin:0;
+}
+
+input[type="text"]{
+    padding:8px;
+    margin:5px;
+}
+
+button{
+    padding:8px 12px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="todo"></div>
+
+<script>
+
+(function(){
+
+const todos = [];
+
+const todocontainer =
+document.getElementsByClassName("todo")[0];
+
+
+
+const inputtask = document.createElement("input");
+inputtask.type = "text";
+inputtask.placeholder = "Enter your task";
+
+
+
+const btn = document.createElement("button");
+btn.textContent = "ADD";
+
+
+
+const searchInput = document.createElement("input");
+searchInput.type = "text";
+searchInput.placeholder = "Search task";
+
+
+
+const searchBtn = document.createElement("button");
+searchBtn.textContent = "SEARCH";
+
+
+
+const todolist = document.createElement("div");
+
+
+
+todocontainer.append(
+    inputtask,
+    btn,
+    document.createElement("br"),
+    searchInput,
+    searchBtn,
+    todolist
+);
+
+
+
+function makeId(){
+    return Date.now().toString(36)
+    + Math.random().toString(36).slice(2,8);
+}
+
+
+
+function rendertask(taskObj){
+
+    const todoitem = document.createElement("div");
+    todoitem.className = "todo-item";
+    todoitem.dataset.id = taskObj.id;
+
+
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+
+
+    const p = document.createElement("p");
+    p.textContent = taskObj.text;
+
+
+
+    const editbtn = document.createElement("button");
+    editbtn.textContent = "EDIT";
+
+
+
+    const deletebtn = document.createElement("button");
+    deletebtn.textContent = "DELETE";
+
+
+
+    checkbox.addEventListener("change",function(){
+
+        taskObj.completed = checkbox.checked;
+
+        if(checkbox.checked){
+            p.style.textDecoration = "line-through";
+            p.style.color = "gray";
+        }
+
+        else{
+            p.style.textDecoration = "none";
+            p.style.color = "black";
+        }
+
+    });
+
+
+
+    todoitem.append(
+        checkbox,
+        p,
+        editbtn,
+        deletebtn
+    );
+
+    todolist.prepend(todoitem);
+
+
+
+
+    deletebtn.addEventListener("click",function(){
+
+        const index = todos.findIndex(
+            t => t.id === taskObj.id
+        );
+
+        if(index !== -1){
+            todos.splice(index,1);
+        }
+
+        todoitem.remove();
+
+    });
+
+
+
+
+    editbtn.addEventListener("click",function(){
+
+        const isEditing =
+        todoitem.dataset.editing === "true";
+
+
+
+        if(!isEditing){
+
+            const input =
+            document.createElement("input");
+
+            input.type = "text";
+            input.value = taskObj.text;
+
+            todoitem.replaceChild(input,p);
+
+            editbtn.textContent = "SAVE";
+            todoitem.dataset.editing = "true";
+
+            input.focus();
+
+
+            input.addEventListener("keydown",function(e){
+
+                if(e.key === "Enter"){
+                    editbtn.click();
+                }
+
+                if(e.key === "Escape"){
+
+                    todoitem.replaceChild(
+                        p,
+                        todoitem.querySelector(
+                        "input[type='text']")
+                    );
+
+                    editbtn.textContent = "EDIT";
+                    todoitem.dataset.editing = "false";
+
+                }
+
+            });
+
+        }
+
+
+
+        else{
+
+            const input =
+            todoitem.querySelector(
+            "input[type='text']");
+
+            const newText =
+            input.value.trim();
+
+            if(!newText){
+                input.focus();
+                return;
+            }
+
+            taskObj.text = newText;
+            p.textContent = newText;
+
+            todoitem.replaceChild(p,input);
+
+            editbtn.textContent = "EDIT";
+            todoitem.dataset.editing = "false";
+
+        }
+
+    });
+
+}
+
+
+
+
+function addtodo(){
+
+    const text = inputtask.value.trim();
+
+    if(!text){
+        inputtask.focus();
+        return;
+    }
+
+    const taskObj = {
+
+        id:makeId(),
+        text:text,
+        completed:false
+
+    };
+
+
+    todos.unshift(taskObj);
+
+    rendertask(taskObj);
+
+    inputtask.value = "";
+    inputtask.focus();
+
+}
+
+
+
+
+function searchTasks(){
+
+    const value =
+    searchInput.value.trim().toLowerCase();
+
+    const items =
+    document.querySelectorAll(".todo-item");
+
+
+    items.forEach(function(item){
+
+        const text =
+        item.querySelector("p")
+        .textContent
+        .toLowerCase();
+
+
+        if(text.includes(value)){
+            item.style.display = "flex";
+        }
+
+        else{
+            item.style.display = "none";
+        }
+
+    });
+
+}
+
+
+
+
+
+btn.addEventListener("click",addtodo);
+
+
+inputtask.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        addtodo();
+    }
+
+});
+
+
+searchBtn.addEventListener("click",searchTasks);
+
+
+
+searchInput.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        searchTasks();
+    }
+
+});
+
+
+
+searchInput.addEventListener("input",searchTasks);
+
+
+})();
+
+</script>
+
+</body>
+</html>

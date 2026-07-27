@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<title>Login Page</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+
+    background-image:url("background.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 40px;
+    background:rgba(45, 16, 82, 0.486);
+}
+
+.logo h2{
+    color:white;
+    font-size:36px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#ffd700;
+}
+
+.bell{
+    font-size:22px;
+    color:white;
+    cursor:pointer;
+}
+
+.bell:hover{
+    color:#ffd700;
+}
+
+
+.login-container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    width:350px;
+    padding:30px;
+
+    background:rgba(255,255,255,0.85);
+    border-radius:12px;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.login-container h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login-container label{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.login-container input{
+    padding:10px;
+    font-size:16px;
+    border:1px solid #999;
+    border-radius:5px;
+    margin-bottom:15px;
+}
+
+.login-container button{
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+
+    border:none;
+    border-radius:5px;
+
+    background:#37698d;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.login-container button:hover{
+    background:#2b5270;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+
+    <div class="logo">
+        <h2>ABC</h2>
+    </div>
+
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Profile</a>
+        <a href="#">Contact</a>
+        <i class="fa-solid fa-bell fa-shake bell"></i>
+    </div>
+
+</nav>
+
+<div class="login-container">
+
+    <h2>Login</h2>
+
+    <label for="email">Email</label>
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required>
+
+    <label for="password">Password</label>
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        required>
+
+   <button type="submit" id="loginBtn">Log In</button>
+
+</div>
+<script>
+
+let button = document.getElementById("loginBtn");
+
+button.addEventListener("click", function () {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if (email == "" || password == "") {
+        alert("Please fill all the fields.");
+    }
+    else {
+        alert("Login Successful!");
+    }
+
+});
+
+</script>
+</body>
+</html>

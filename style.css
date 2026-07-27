@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ddd;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #000;
+}
+
+.row {
+    display: flex;
+}
+
+.box {
+    width: 60px;
+    height: 60px;
+}
+
+.white {
+    background: #ffffff;
+}
+
+.black {
+    background: #000000;
+}
