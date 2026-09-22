@@ -1,0 +1,55 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #222;
+  color: white;
+}
+
+.navbar h2 {
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.nav-links a:hover {
+  color: #61dafb;
+}
+
+.page {
+  padding: 40px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 500px;
+
+  padding: 12px 20px;
+  margin: 10px 0;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.task p {
+  margin: 0;
+  font-size: 17px;
+}
+
+.task span {
+  font-size: 14px;
+  color: gray;
+}
